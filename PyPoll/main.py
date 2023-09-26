@@ -15,7 +15,8 @@ percVtsC = 0
 percVtsD = 0
 percVtsR = 0
 
-csvpath = os.path.join('/Users/ezrasalomon/Desktop/Bootcamp/Python/python-challenge/PyPoll', 'Resources', 'election_data.csv')
+#csvpath = os.path.join('/Users/ezrasalomon/Desktop/Bootcamp/Python/python-challenge/PyPoll', 'Resources', 'election_data.csv')
+csvpath = os.path.join('Resources', 'election_data.csv')
 with open(csvpath) as csvfile:
     csvreader = csv.reader(csvfile, delimiter=',')
     header = next(csvreader)
@@ -34,8 +35,9 @@ with open(csvpath) as csvfile:
         elif row[2] == ddg:
             ddgVts += 1
             percVtsD = (ddgVts / totalVotes * 100)
-        else: radVts += 1
-        percVtsR = (radVts / totalVotes * 100)
+        elif row[2] == rad:
+            radVts += 1
+            percVtsR = (radVts / totalVotes * 100)
 #Determine winner
         if ccsVts > ddgVts + radVts:
             winner = ccsVts
@@ -48,12 +50,23 @@ with open(csvpath) as csvfile:
 
 
 
+lines = f"""
+Election Results
+Total votes:{totalVotes}
+Charles Casper Stockham:{percVtsC}% ({ccsVts})
+Diana DeGette:{percVtsD}% ({ddgVts})
+Raymon Anthony Doane:{percVtsR}% ({radVts})
+Winner: {winner}
+"""
 
-        
+print(lines)
 
-print("Election Results")
+'''print("Election Results")
 print(f"Total votes:{totalVotes}")
 print(f"Charles Casper Stockham:{percVtsC}% ({ccsVts})")
 print(f"Diana DeGette:{percVtsD}% ({ddgVts})")
 print(f"Raymon Anthony Doane:{percVtsR}% ({radVts})")
-print(f"Winner: {winner}")
+print(f"Winner: {winner}")'''
+
+with open ('analysis/analysis.txt', 'w') as f:
+    f.write(lines)
